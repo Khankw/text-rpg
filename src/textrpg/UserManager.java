@@ -35,6 +35,15 @@ public class UserManager {
 		return true;
 	}
 
+	public boolean leave(String pw) {
+		if (!loginUser.chkPassword(pw))
+			return false;
+
+		users.remove(loginUser);
+		loginUser = null;
+		return true;
+	}
+
 	public void logout() {
 		loginUser = null;
 	}
