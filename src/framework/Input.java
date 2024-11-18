@@ -37,7 +37,7 @@ public class Input {
 
 	public int input(String msg, int defaultNum) {
 		try {
-			int num = Integer.parseInt(input());
+			int num = Integer.parseInt(input(msg));
 			return num;
 		} catch (Exception e) {
 			out.add("숫자만 입력가능.", IndexColor.RED);
