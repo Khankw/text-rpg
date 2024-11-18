@@ -1,4 +1,4 @@
-package textrpg;
+package framework;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

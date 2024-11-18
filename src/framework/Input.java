@@ -1,4 +1,4 @@
-package textrpg;
+package framework;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

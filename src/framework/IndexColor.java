@@ -1,4 +1,4 @@
-package textrpg;
+package framework;
 
 public enum IndexColor {
 	BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, GRAY, BRIGHTRED, BRIGHTGREEN, BRIGHTYELLOW, BRIGHTBLUE,
