@@ -119,8 +119,7 @@ public class Output {
 		} else {
 			str.append(FGBLIGHT);
 		}
-		str.append(color.ordinal() % 8);
-		str.append(END);
+		str.append(color.ordinal() % 8).append(END);
 	}
 
 	public void addColor(IndexColor fColor, IndexColor bColor) {
@@ -130,56 +129,31 @@ public class Output {
 		} else {
 			str.append(FGBLIGHT);
 		}
-		str.append(fColor.ordinal() % 8);
-		str.append(";");
+		str.append(fColor.ordinal() % 8).append(";");
 		if (bColor.ordinal() < 8) {
 			str.append(BGCOLOR);
 		} else {
 			str.append(BGBLIGHT);
 		}
-		str.append(bColor.ordinal() % 8);
-		str.append(END);
+		str.append(bColor.ordinal() % 8).append(END);
 	}
 
 	public void addColor(int r, int g, int b) {
-		str.append(ESCAPE);
-		str.append(FGCOLOR);
-		str.append(RGB);
-		str.append(r);
-		str.append(";");
-		str.append(g);
-		str.append(";");
-		str.append(b);
-		str.append(END);
+		str.append(ESCAPE).append(FGCOLOR).append(RGB);
+		str.append(r).append(";").append(g).append(";").append(b).append(END);
 	}
 
 	public void addColor(int fR, int fG, int fB, int bR, int bG, int bB) {
-		str.append(ESCAPE);
-		str.append(FGCOLOR);
-		str.append(RGB);
-		str.append(fR);
-		str.append(";");
-		str.append(fG);
-		str.append(";");
-		str.append(fB);
-		str.append(";");
-		str.append(BGCOLOR);
-		str.append(RGB);
-		str.append(bR);
-		str.append(";");
-		str.append(bG);
-		str.append(";");
-		str.append(bB);
-		str.append(END);
+		str.append(ESCAPE).append(FGCOLOR).append(RGB);
+		str.append(fR).append(";").append(fG).append(";").append(fB).append(";");
+		str.append(BGCOLOR).append(RGB);
+		str.append(bR).append(";").append(bG).append(";").append(bB).append(END);
 	}
 
 	public void inputColor() {
 		resetColor();
-		str.append(ESCAPE);
-		str.append(FGCOLOR);
-		str.append(RGB);
-		str.append("0;200;125");
-		str.append(END);
+		str.append(ESCAPE).append(FGCOLOR).append(RGB);
+		str.append("0;200;125").append(END);
 		print();
 	}
 
@@ -207,14 +181,12 @@ public class Output {
 	}
 
 	public void println(String msg) {
-		str.append(msg);
-		str.append("\n");
+		str.append(msg).append("\n");
 		print();
 	}
 
 	public void println(int num) {
-		str.append(num);
-		str.append("\n");
+		str.append(num).append("\n");
 		print();
 	}
 
