@@ -2,6 +2,8 @@ package scenes;
 
 import java.util.HashMap;
 
+import framework.Output;
+
 public class SceneManager {
 	private SceneManager() {
 	}
@@ -23,9 +25,14 @@ public class SceneManager {
 	}
 
 	public void changeScene(String key) {
-		Scene prevScene = curScene;
-		curScene = scenes.get(key);
-		curScene.setPrevScene(prevScene);
+		Scene newScene = scenes.get(key);
+		
+		if(newScene ==null) {
+			Output.getInstance().printErrln("해당 씬이 없음");
+			return;
+		}
+		newScene.setPrevScene(curScene);
+		curScene = newScene;
 	}
 
 	public void prevScene() {
