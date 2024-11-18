@@ -4,6 +4,7 @@ import framework.*;
 import textrpg.TextRPG;
 
 abstract public class Scene {
+	protected final int TITLELENGTH = 30;
 	protected final int EXIT = 0;
 
 	protected IndexColor color;
@@ -25,11 +26,20 @@ abstract public class Scene {
 		return this.prevScene;
 	}
 
-	
 	protected void printTitle(String title) {
-		out.add("======== ", color.GREEN, color.BRIGHTYELLOW);
+		int length = title.length();
+		int size = TITLELENGTH - length - 2;
+		out.addColor(color.GREEN, color.BRIGHTYELLOW);
+		for (int i = 0; i < size / 2; i++)
+			out.add("=");
+		if (size % 2 == 1)
+			out.add("=");
+		out.add(" ");
 		out.add(title);
-		out.println(" ========");
+		out.add(" ");
+		for (int i = 0; i < size / 2; i++)
+			out.add("=");
+		out.println();
 		out.resetColor();
 	}
 
