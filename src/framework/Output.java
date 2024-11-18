@@ -190,6 +190,18 @@ public class Output {
 		print();
 	}
 
+	public void printErr(String msg) {
+		add(msg, IndexColor.RED);
+		resetColor();
+		print();
+	}
+	
+	public void printErrln(String msg) {
+		add(msg, IndexColor.RED);
+		resetColor();
+		println();
+	}
+	
 	public void print() {
 		try {
 			bufferedWriter.append(str);
