@@ -30,7 +30,8 @@ public class Input {
 	}
 
 	public String input(String msg) {
-		out.print(msg + " : ");
+		out.add(msg);
+		out.print(" : ");
 		return input();
 	}
 
@@ -40,7 +41,6 @@ public class Input {
 			return num;
 		} catch (Exception e) {
 			out.add("숫자만 입력가능.", IndexColor.RED);
-			;
 		}
 		return defaultNum;
 	}
