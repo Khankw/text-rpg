@@ -15,17 +15,6 @@ abstract public class Scene {
 
 	protected SceneManager manager = SceneManager.getInstance();
 
-	protected Scene prevScene;
-
-	public void setPrevScene(Scene prevScene) {
-		if (prevScene != null)
-			this.prevScene = prevScene;
-	}
-
-	public Scene getPrevScene() {
-		return this.prevScene;
-	}
-
 	protected void printTitle(String title) {
 		int length = title.length();
 		int size = TITLELENGTH - length - 2;

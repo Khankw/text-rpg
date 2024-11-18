@@ -18,6 +18,6 @@ public class Signin extends Scene {
 		} else
 			out.printErrln("ID가 중복되었습니다.");
 
-		manager.prevScene();
+		manager.changeScene("Title");;
 	}
 }

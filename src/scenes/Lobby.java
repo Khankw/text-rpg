@@ -40,7 +40,6 @@ public class Lobby extends Scene {
 		out.println("탈퇴가 완료되었습니다.");
 
 		manager.changeScene("Title");
-
 	}
 
 	private void logout() {

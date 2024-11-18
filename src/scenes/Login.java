@@ -21,6 +21,6 @@ public class Login extends Scene {
 		} else
 			out.printErrln("사용자 정보를 확인해 주세요.");
 
-		manager.prevScene();
+		manager.changeScene("Title");;
 	}
 }

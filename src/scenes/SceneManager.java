@@ -31,12 +31,7 @@ public class SceneManager {
 			Output.getInstance().printErrln("해당 씬이 없음");
 			return;
 		}
-		newScene.setPrevScene(curScene);
 		curScene = newScene;
-	}
-
-	public void prevScene() {
-		curScene = curScene.getPrevScene();
 	}
 
 	public void update() {
