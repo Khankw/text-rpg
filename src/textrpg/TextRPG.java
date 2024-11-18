@@ -24,6 +24,7 @@ public class TextRPG {
 		scene.putScene(new Title());
 		scene.putScene(new Login());
 		scene.putScene(new Signin());
+		scene.putScene(new Lobby());
 	}
 	
 	public void exit() {
