@@ -15,5 +15,7 @@ public class Title extends Scene {
 			manager.changeScene("Signin");
 		else if (sel == EXIT)
 			exit();
+		
+
 	}
 }

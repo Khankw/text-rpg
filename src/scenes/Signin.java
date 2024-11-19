@@ -1,7 +1,5 @@
 package scenes;
 
-import textrpg.UserManager;
-
 public class Signin extends Scene {
 	@Override
 	public void update() {
@@ -9,15 +7,9 @@ public class Signin extends Scene {
 		String id = in.input("ID");
 		String pw = in.input("PW");
 
-		UserManager usermanager = UserManager.getInstance();
+		if (user.signin(id, pw))
+			out.add(id, color.BRIGHTBLUE).resetColor().println("님의 회원가입이 완료되었습니다.");
 
-		if (usermanager.signin(id, pw)) {
-			out.add(id, color.BRIGHTBLUE);
-			out.resetColor();
-			out.println("님의 회원가입이 완료되었습니다.");
-		} else
-			out.printErrln("ID가 중복되었습니다.");
-
-		manager.changeScene("Title");;
+		manager.changeScene("Title");
 	}
 }
