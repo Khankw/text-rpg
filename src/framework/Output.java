@@ -21,7 +21,6 @@ public class Output {
 	private final int BGBLIGHT = 10;
 	private final String RGB = "8;2;";
 	private final String END = "m";
-	private final String RESET = "\033[0m";
 
 	private BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
 	private StringBuffer str = new StringBuffer();
@@ -32,54 +31,89 @@ public class Output {
 	}
 
 	public Output add(Object obj, IndexColor color) {
-		addColor(color);
+		color(color);
 		str.append(obj.toString());
 		return this;
 	}
 
 	public Output add(Object obj, IndexColor fColor, IndexColor bColor) {
-		addColor(fColor, bColor);
+		color(fColor, bColor);
 		str.append(obj.toString());
 		return this;
 	}
 
 	public Output add(Object obj, int r, int g, int b) {
-		addColor(r, g, b);
+		color(r, g, b);
 		str.append(obj.toString());
 		return this;
 	}
 
 	public Output add(Object obj, int fR, int fG, int fB, int bR, int bG, int bB) {
-		addColor(fR, fG, fB, bR, bG, bB);
+		color(fR, fG, fB, bR, bG, bB);
 		str.append(obj.toString());
 		return this;
 	}
 
 	public Output addReset(Object obj, IndexColor color) {
 		add(obj, color);
-		resetColor();
+		reset();
 		return this;
 	}
 
 	public Output addReset(Object obj, IndexColor fColor, IndexColor bColor) {
 		add(obj, fColor, bColor);
-		resetColor();
+		reset();
 		return this;
 	}
 
 	public Output addReset(Object obj, int r, int g, int b) {
 		add(obj, r, g, b);
-		resetColor();
+		reset();
 		return this;
 	}
 
 	public Output addReset(Object obj, int fR, int fG, int fB, int bR, int bG, int bB) {
 		add(obj, fR, fG, fB, bR, bG, bB);
-		resetColor();
+		reset();
 		return this;
 	}
 
-	public Output addColor(IndexColor color) {
+	public Output reset() {
+		str.append(ESCAPE).append(0).append(END);
+		return this;
+	}
+
+	public Output setBold() {
+		str.append(ESCAPE).append(1).append(END);
+		return this;
+	}
+
+	public Output setItalic() {
+		str.append(ESCAPE).append(3).append(END);
+		return this;
+	}
+
+	public Output setUnderline() {
+		str.append(ESCAPE).append(4).append(END);
+		return this;
+	}
+	
+	public Output setInvert() {
+		str.append(ESCAPE).append(7).append(END);
+		return this;
+	}
+	
+	public Output setStrike() {
+		str.append(ESCAPE).append(9).append(END);
+		return this;
+	}
+
+	public Output setDoublyUnder() {
+		str.append(ESCAPE).append(21).append(END);
+		return this;
+	}
+	
+	public Output color(IndexColor color) {
 		str.append(ESCAPE);
 		if (color.ordinal() < 8) {
 			str.append(FGCOLOR);
@@ -90,7 +124,7 @@ public class Output {
 		return this;
 	}
 
-	public Output addColor(IndexColor fColor, IndexColor bColor) {
+	public Output color(IndexColor fColor, IndexColor bColor) {
 		str.append(ESCAPE);
 		if (fColor.ordinal() < 8) {
 			str.append(FGCOLOR);
@@ -107,22 +141,17 @@ public class Output {
 		return this;
 	}
 
-	public Output addColor(int r, int g, int b) {
+	public Output color(int r, int g, int b) {
 		str.append(ESCAPE).append(FGCOLOR).append(RGB);
 		str.append(r).append(";").append(g).append(";").append(b).append(END);
 		return this;
 	}
 
-	public Output addColor(int fR, int fG, int fB, int bR, int bG, int bB) {
+	public Output color(int fR, int fG, int fB, int bR, int bG, int bB) {
 		str.append(ESCAPE).append(FGCOLOR).append(RGB);
 		str.append(fR).append(";").append(fG).append(";").append(fB).append(";");
 		str.append(BGCOLOR).append(RGB);
 		str.append(bR).append(";").append(bG).append(";").append(bB).append(END);
-		return this;
-	}
-
-	public Output resetColor() {
-		str.append(RESET);
 		return this;
 	}
 
@@ -132,7 +161,7 @@ public class Output {
 	}
 
 	public void inputColor() {
-		resetColor();
+		reset();
 		str.append(ESCAPE).append(FGCOLOR).append(RGB);
 		str.append("0;200;125").append(END);
 		print();
@@ -164,16 +193,23 @@ public class Output {
 
 	public void printErr(Object obj) {
 		add(obj, IndexColor.RED);
-		resetColor();
+		reset();
 		print();
 	}
 
 	public void printErrln(Object obj) {
 		add(obj, IndexColor.RED);
-		resetColor();
+		reset();
 		println();
 	}
 
+	public Output clear() {
+		str.setLength(0);
+		reset();
+		print();
+		return this;
+	}
+	
 	public Output print() {
 		try {
 			bufferedWriter.append(str);
