@@ -10,8 +10,9 @@ public class Lobby extends Scene {
 
 	@Override
 	public void update() {
+		setPlayer();
 		printTitle("대기실");
-		out.println(user.getPlayer());
+		player.showInfo();
 		int sel = in.input("[1]던전 [2]파티 [3]길드 [4]상점\n[5]로그아웃 [6]계정탈퇴 [0]게임종료", -1);
 
 		if (sel == DUNGEON)
@@ -35,13 +36,15 @@ public class Lobby extends Scene {
 		if (!user.leave(pw))
 			return;
 
+		player = null;
 		out.println("탈퇴가 완료되었습니다.");
-
 		manager.changeScene("Title");
 	}
 
 	private void logout() {
 		user.logout();
+		player = null;
+		out.println("로그아웃되었습니다.");
 		manager.changeScene("Title");
 	}
 }

@@ -25,7 +25,6 @@ public class UserManager {
 	private HashMap<Integer, Player> Players = new HashMap<>();
 
 	private User log;
-	private Player player;
 
 	public boolean login(String id, String pw) {
 		User user = new User(id, pw, 0);
@@ -34,7 +33,6 @@ public class UserManager {
 			return false;
 
 		log = users.get(idx);
-		player = Players.get(log.getCode());
 		return true;
 	}
 
@@ -43,7 +41,7 @@ public class UserManager {
 			out.printErrln("더 이상 가입이 불가합니다.");
 			return false;
 		}
-		
+
 		for (User chk : users) {
 			if (chk.chkId(id)) {
 				out.printErrln("이미 사용된 ID입니다.");
@@ -80,17 +78,11 @@ public class UserManager {
 		Players.remove(log.getCode());
 		users.remove(log);
 		log = null;
-		Players = null;
 		return true;
 	}
 
 	public void logout() {
 		log = null;
-		Players = null;
-	}
-
-	public boolean isLogin() {
-		return log != null;
 	}
 
 	public String getUserId() {
@@ -98,6 +90,6 @@ public class UserManager {
 	}
 
 	public Player getPlayer() {
-		return player;
+		return Players.get(log.getCode());
 	}
 }

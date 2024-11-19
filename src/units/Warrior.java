@@ -1,5 +1,7 @@
 package units;
 
+import java.util.ArrayList;
+
 public class Warrior extends Playable {
 
 	public Warrior(String name) {
@@ -7,7 +9,7 @@ public class Warrior extends Playable {
 	}
 
 	@Override
-	public boolean useSkill(Unit unit) {
+	public boolean useSkill(ArrayList<Unit> units) {
 		// TODO Auto-generated method stub
 		return false;
 	}

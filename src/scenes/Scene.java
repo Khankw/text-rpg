@@ -1,6 +1,7 @@
 package scenes;
 
 import framework.*;
+import textrpg.Player;
 import textrpg.TextRPG;
 import textrpg.UserManager;
 
@@ -12,16 +13,14 @@ abstract public class Scene {
 	protected Output out = Output.getInstance();
 	protected Input in = Input.getInstance();
 
-	protected TextRPG game = TextRPG.getInstance();
-
 	protected SceneManager manager = SceneManager.getInstance();
-	
 	protected UserManager user = UserManager.getInstance();
+	protected Player player;
 
 	protected void printTitle(String title) {
 		int length = title.length();
 		int size = TITLELENGTH - length - 2;
-		out.addColor(color.GREEN, color.BRIGHTYELLOW);
+		out.color(color.CYAN, color.BRIGHTYELLOW);
 		for (int i = 0; i < size / 2; i++)
 			out.add("=");
 		if (size % 2 == 1)
@@ -29,11 +28,20 @@ abstract public class Scene {
 		out.add(" ").add(title).add(" ");
 		for (int i = 0; i < size / 2; i++)
 			out.add("=");
-		out.println().resetColor();
+		out.println().reset();
+	}
+
+	protected void setPlayer() {
+		if (player != null)
+			return;
+		player = user.getPlayer();
 	}
 
 	protected void exit() {
-		game.exit();
+		out.color(color.GRAY, color.WHITE);
+		out.println("게임을 종료합니다.").reset();
+		
+		TextRPG.getInstance().exit();
 	}
 
 	abstract public void update();

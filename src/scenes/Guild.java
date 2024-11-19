@@ -1,7 +1,6 @@
 package scenes;
 
 import framework.RandomGen;
-import textrpg.Player;
 import units.*;
 
 public class Guild extends Scene {
@@ -10,8 +9,9 @@ public class Guild extends Scene {
 
 	@Override
 	public void update() {
+		setPlayer();
 		printTitle("길드");
-		out.println(user.getPlayer());
+		player.showInfo();
 		int sel = in.input("[1]용병모집 [2]용병해고 [0]로비", -1);
 
 		if (sel == RECRUIT)
@@ -26,12 +26,11 @@ public class Guild extends Scene {
 		int price = 10;
 
 		printTitle("용병모집");
-		Player player = user.getPlayer();
 		if (player.getMoney() < price) {
 			out.printErrln("모집할 금액이 부족합니다.");
 			return;
 		}
-		if (player.getUnitsSize() == 20) {
+		if (player.isMaxUnit()) {
 			out.printErrln("용병을 더 이상 늘릴수 없습니다.");
 			return;
 		}
@@ -62,7 +61,7 @@ public class Guild extends Scene {
 			player.subtractMoney(price);
 			player.addUnit(unit);
 			out.addReset("#### 모집성공 ####\n", color.BLUE, color.BRIGHTGREEN);
-			out.add(unit).addLine().add(unit.getName()).println("이 고용되었습니다.");
+			out.add(unit).addLine().add(unit.getName(), color.BLUE).reset().println("이 고용되었습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,25 +69,21 @@ public class Guild extends Scene {
 
 	private void remove() {
 		printTitle("용병해고");
-		Player player = user.getPlayer();
-
 		if (player.getUnitsSize() < 2) {
 			out.printErrln("용병이 2명 이상일때 해고가 가능합니다.");
 			return;
 		}
 
-		out.println(player.unitsToString());
+		player.showUnits();
 		int sel = in.input("해고할 용병 번호 입력", 0) - 1;
 
-		if (sel < 0 || sel >= player.getUnitsSize()) {
-			out.printErrln("입력 범위를 벗어났습니다.");
+		if (sel < 0 || sel >= player.getUnitsSize())
 			return;
-		}
 
 		String name = player.getUnitName(sel);
 		player.removeUnit(sel);
 		out.addReset("#### 해고완료 ####\n", color.BLACK, color.BRIGHTRED);
-		out.add(name).println("이 해고되었습니다.");
+		out.add(name, color.RED).reset().println("이 해고되었습니다.");
 
 	}
 }

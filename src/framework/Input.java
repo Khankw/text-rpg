@@ -21,7 +21,7 @@ public class Input {
 		try {
 			out.inputColor();
 			String input = bufferedReader.readLine();
-			out.resetColor();
+			out.reset();
 			return input;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +40,6 @@ public class Input {
 			int num = Integer.parseInt(input(msg));
 			return num;
 		} catch (Exception e) {
-			out.printErrln("숫자만 입력가능.");
 		}
 		return defaultNum;
 	}
