@@ -2,6 +2,7 @@ package textrpg;
 
 import java.util.ArrayList;
 
+import items.Item;
 import units.Playable;
 
 public class Player {
@@ -12,6 +13,7 @@ public class Player {
 
 	private ArrayList<Playable> units = new ArrayList<>();
 	private ArrayList<Playable> party = new ArrayList<>();
+	private ArrayList<Item> items = new ArrayList<>();
 
 	public Player() {
 		this.money = 1500;
@@ -82,7 +84,7 @@ public class Player {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append("[현금:").append(money).append("][유닛:");
+		str.append("[현금:").append(money).append("][보유용병:");
 		str.append(units.size()).append("/").append(MAXUNITS).append("]\n");
 		for (int i = 0; i < MAXPARTY; i++) {
 			Playable unit = party.get(i);
