@@ -149,20 +149,19 @@ public class Output {
 		str.append(BGCOLOR).append(RGB);
 		str.append(bR).append(";").append(bG).append(";").append(bB).append(END);
 	}
-
-	public void inputColor() {
-		resetColor();
-		str.append(ESCAPE).append(FGCOLOR).append(RGB);
-		str.append("0;200;125").append(END);
-		print();
-	}
-
 	public void resetColor() {
 		str.append(RESET);
 	}
 
 	public void addLine() {
 		str.append("\n");
+	}
+	
+	public void inputColor() {
+		resetColor();
+		str.append(ESCAPE).append(FGCOLOR).append(RGB);
+		str.append("0;200;125").append(END);
+		print();
 	}
 
 	public void print(String msg) {
@@ -210,5 +209,10 @@ public class Output {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return str.toString();
 	}
 }
