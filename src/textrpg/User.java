@@ -5,9 +5,10 @@ public class User {
 	private String password;
 	private int code;
 
-	public User(String id, String password) {
+	public User(String id, String password, int code) {
 		this.id = id;
 		this.password = password;
+		this.code = code;
 	}
 
 	public boolean chkId(String id) {
@@ -18,8 +19,16 @@ public class User {
 		return this.password.equals(password);
 	}
 
+	public boolean chkCode(int code) {
+		return this.code == code;
+	}
+
 	public String getId() {
 		return id;
+	}
+
+	public int getCode() {
+		return code;
 	}
 
 	@Override
@@ -30,5 +39,4 @@ public class User {
 		}
 		return false;
 	}
-
 }
