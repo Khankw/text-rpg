@@ -2,44 +2,33 @@ package units;
 
 import java.util.HashMap;
 
-import framework.RandomGen;
 import items.Wearable;
 
 public abstract class Playable extends Unit {
-	private HashMap<String, Wearable> equipments = new HashMap<>();
+	private HashMap<Integer, Wearable> equipments = new HashMap<>();
 
 	public Playable(String name, int hp, int sp, int power, int speed) {
 		super(name, hp, sp, power, speed);
-		RandomGen ran = RandomGen.getInstance();
-		this.hp += ran.get(0, 100);
-		this.maxHp = this.hp;
-		this.sp += ran.get(0, 50);
-		this.maxSp = this.sp;
-		this.power += ran.get(0, 20);
-		this.speed += ran.get(0, 20);
-		calcEquipStatus();
 	}
 
 	public void equip(Wearable equipment) {
-		String part = equipment.getPart();
-		Wearable oldEquip = equipments.get(part);
-		if (oldEquip != null)
-			oldEquip.setEquiped(false);
+		int type = equipment.getType();
+		unequip(type);
 
-		equipments.put(part, equipment);
-		calcEquipStatus();
+		equipments.put(type, equipment);
+		attack += equipment.getAttack();
+		defense += equipment.getDefense();
+		equipment.setEquipped(this);
 	}
 
-	private void calcEquipStatus() {
-		attack = power;
-		defense = 0;
-		for (String part : equipments.keySet()) {
-			Wearable equip = equipments.get(part);
-			attack += equip.getAttack();
-			defense += equip.getDefense();
-		}
+	public void unequip(int type) {
+		Wearable equip = equipments.get(type);
+		if (equip == null)
+			return;
 
+		equipments.put(type, null);
+		attack -= equip.getAttack();
+		defense -= equip.getDefense();
+		equip.setEquipped(null);
 	}
-	
-	
 }

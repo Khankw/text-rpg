@@ -2,12 +2,16 @@ package textrpg;
 
 import java.util.ArrayList;
 
-import items.Item;
+import framework.*;
+import items.*;
 import units.Playable;
 
 public class Player {
 	private final int MAXUNITS = 20;
 	private final int MAXPARTY = 5;
+	private final int MAXITEMS = 50;
+
+	private Output out = Output.getInstance();
 
 	private int money;
 
@@ -43,7 +47,26 @@ public class Player {
 		if (idx != -1)
 			party.set(idx, null);
 
+		if (unit != null)
+			unit.setBonus((MAXPARTY - partyNum) * 5, (partyNum + 1) * 5);
 		party.set(partyNum, unit);
+	}
+
+	public void addItem(Item item) {
+		items.add(item);
+	}
+
+	public Item sellItem(int index) {
+		Item item = items.get(index);
+		if (item instanceof Wearable) {
+			Wearable wearable = (Wearable) item;
+			Playable unit = wearable.getEquippedUnit();
+			if (unit != null)
+				unit.unequip(item.getType());
+		}
+
+		items.remove(index);
+		return item;
 	}
 
 	public int getMoney() {
@@ -58,6 +81,18 @@ public class Player {
 		return units.size();
 	}
 
+	public boolean isMaxUnit() {
+		return units.size() == MAXUNITS;
+	}
+
+	public int getItemsSize() {
+		return items.size();
+	}
+
+	public boolean isMaxItem() {
+		return items.size() == MAXITEMS;
+	}
+
 	public void subtractMoney(int money) {
 		this.money -= money;
 	}
@@ -66,37 +101,51 @@ public class Player {
 		this.money += money;
 	}
 
-	public String unitsToString() {
-		StringBuilder str = new StringBuilder();
-		for (int i = 0; i < units.size(); i++) {
-			Playable unit = units.get(i);
-			str.append(i + 1).append(") ").append(unit);
-			if(party.contains(unit))
-				str.append(" <<<파티중");
-			str.append("\n------------------------------");
-			if (i < units.size() - 1)
-				str.append("\n");
-		}
-
-		return str.toString();
+	public void showInfo() {
+		out.clear();
+		out.add("[현금:").add(money).add("][보유용병:");
+		out.add(units.size()).add("/").add(MAXUNITS).add("][보유아이템:");
+		out.add(items.size()).add("/").add(MAXITEMS).println("]");
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder str = new StringBuilder();
-		str.append("[현금:").append(money).append("][보유용병:");
-		str.append(units.size()).append("/").append(MAXUNITS).append("]\n");
-		for (int i = 0; i < MAXPARTY; i++) {
-			Playable unit = party.get(i);
-			str.append(i + 1).append("번째 용병----------------------\n");
-			if (unit == null)
-				str.append("빈슬롯");
+	public void showUnits() {
+		out.clear();
+		for (int i = 0; i < units.size(); i++) {
+			Playable unit = units.get(i);
+			boolean isParty = party.contains(unit);
+			if (isParty)
+				out.add(i + 1, IndexColor.BLACK, IndexColor.BRIGHTCYAN);
 			else
-				str.append(unit);
-			str.append("\n");
+				out.add(i + 1, IndexColor.BLACK, IndexColor.WHITE);
+			out.add(") ").add(unit);
+			if (isParty)
+				out.add(" <<<파티중");
+			out.reset().add("\n------------------------------\n");
 		}
-		str.append("------------------------------");
+		out.print();
+	}
 
-		return str.toString();
+	public void showParty() {
+		out.clear();
+		for (int i = 0; i < MAXPARTY; i++) {
+			out.add(i + 1).add("번째 용병----------------------\n");
+			Playable unit = party.get(i);
+			if (unit == null)
+				out.add("빈슬롯", IndexColor.BLACK, IndexColor.WHITE);
+			else
+				out.add(unit, IndexColor.BLACK, IndexColor.BRIGHTCYAN);
+			out.reset().add("\n");
+		}
+		out.println("------------------------------");
+	}
+
+	public void showItems() {
+		out.clear();
+		for (int i = 0; i < items.size(); i++) {
+			Item item = items.get(i);
+			out.add(i + 1, IndexColor.BLACK, IndexColor.WHITE).add(") ").add(item);
+			out.reset().add("\n------------------------------\n");
+		}
+		out.print();
 	}
 }

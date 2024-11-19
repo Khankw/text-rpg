@@ -1,5 +1,9 @@
 package units;
 
+import java.util.ArrayList;
+
+import framework.RandomGen;
+
 abstract public class Unit {
 	private String name;
 	protected int maxHp;
@@ -8,23 +12,32 @@ abstract public class Unit {
 	protected int sp;
 	protected int power;
 	protected int attack;
+	protected int bonusAttack;
 	protected int defense;
+	protected int bonusDefense;
 	protected int speed;
 	protected int turn;
 
+	protected RandomGen ran = RandomGen.getInstance();
+
 	public Unit(String name, int hp, int sp, int power, int speed) {
 		this.name = name;
-		this.maxHp = hp;
-		this.hp = hp;
-		this.maxSp = sp;
-		this.sp = sp;
-		this.power = power;
-		this.attack = power;
-		this.speed = speed;
+		this.hp = hp + ran.get(0, 100);
+		this.maxHp = this.hp;
+		this.sp = sp + ran.get(0, 50);
+		this.maxSp = this.sp;
+		this.power = power + ran.get(0, 10);
+		this.attack = this.power;
+		this.speed = speed + ran.get(0, 10);
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public void setBonus(int attack, int defense) {
+		bonusAttack = attack;
+		bonusDefense = defense;
 	}
 
 	public void resetTurn() {
@@ -45,7 +58,7 @@ abstract public class Unit {
 	}
 
 	public void takeDamage(int damage) {
-		damage -= defense;
+		damage -= ran.get(defense / 2, defense) + bonusDefense;
 		if (damage < 0)
 			damage = 0;
 		hp -= damage;
@@ -59,17 +72,16 @@ abstract public class Unit {
 
 	public void healing(int heal) {
 		hp += heal;
-	}
-
-	public void resurrection() {
-		hp = maxHp;
+		if (hp > maxHp)
+			hp = maxHp;
 	}
 
 	public void attack(Unit unit) {
-		unit.takeDamage(power);
+		int damage = ran.get(attack / 2, attack) + bonusAttack;
+		unit.takeDamage(damage);
 	}
 
-	abstract public boolean useSkill(Unit unit);
+	abstract public boolean useSkill(ArrayList<Unit> units);
 
 	@Override
 	public String toString() {
