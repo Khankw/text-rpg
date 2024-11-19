@@ -74,12 +74,11 @@ abstract public class Unit {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-
-		str.append("[").append(name).append("][HP:").append(hp).append("/").append(maxHp);
+		str.append(name).append(" [직업:").append(this.getClass().getSimpleName());
+		str.append("]\n[HP:").append(hp).append("/").append(maxHp);
 		str.append("][SP:").append(sp).append("/").append(maxSp);
 		str.append("][공격력:").append(attack).append("][방어력:").append(defense);
 		str.append("]");
-
 		return str.toString();
 	}
 }

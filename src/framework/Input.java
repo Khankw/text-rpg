@@ -40,7 +40,7 @@ public class Input {
 			int num = Integer.parseInt(input(msg));
 			return num;
 		} catch (Exception e) {
-			out.add("숫자만 입력가능.", IndexColor.RED);
+			out.printErrln("숫자만 입력가능.");
 		}
 		return defaultNum;
 	}

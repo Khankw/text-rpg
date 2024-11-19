@@ -11,6 +11,7 @@ public class Lobby extends Scene {
 	@Override
 	public void update() {
 		printTitle("대기실");
+		out.println(user.getPlayer());
 		int sel = in.input("[1]던전 [2]파티 [3]길드 [4]상점\n[5]로그아웃 [6]계정탈퇴 [0]게임종료", -1);
 
 		if (sel == DUNGEON)

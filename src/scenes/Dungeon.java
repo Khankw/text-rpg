@@ -5,6 +5,7 @@ public class Dungeon extends Scene {
 	@Override
 	public void update() {
 		printTitle("던전");
+		out.println(user.getPlayer());
 		int sel = in.input("[1]입장 [0]복귀", -1);
 		
 		if (sel == 1)
