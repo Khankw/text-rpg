@@ -31,11 +31,10 @@ public class Guild extends Scene {
 			out.printErrln("모집할 금액이 부족합니다.");
 			return;
 		}
-		if(player.getUnitsSize()==20) {
+		if (player.getUnitsSize() == 20) {
 			out.printErrln("용병을 더 이상 늘릴수 없습니다.");
 			return;
 		}
-			
 
 		StringBuilder str = new StringBuilder();
 		String[] unitClass = { "Warrior", "Cleric", "Mage" };
@@ -88,7 +87,7 @@ public class Guild extends Scene {
 
 		String name = player.getUnitName(sel);
 		player.removeUnit(sel);
-		out.addReset("#### 해고완료 ####\n", color.RED, color.BRIGHTRED);
+		out.addReset("#### 해고완료 ####\n", color.BLACK, color.BRIGHTRED);
 		out.add(name).println("이 해고되었습니다.");
 
 	}

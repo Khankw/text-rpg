@@ -25,7 +25,7 @@ public class Party extends Scene {
 
 		printTitle("파티원교체");
 		out.add(player.unitsToString()).add("\n");
-		out.println("0) 파티원 해제");
+		out.println("0) 파티원 해제\n------------------------------");
 		int index = in.input("용병 번호 입력", 0) - 1;
 		if (index < -1 || index >= player.getUnitsSize()) {
 			out.printErrln("입력 범위를 벗어났습니다.");

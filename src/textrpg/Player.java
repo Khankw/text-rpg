@@ -67,7 +67,11 @@ public class Player {
 	public String unitsToString() {
 		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < units.size(); i++) {
-			str.append(i + 1).append(") ").append(units.get(i));
+			Playable unit = units.get(i);
+			str.append(i + 1).append(") ").append(unit);
+			if(party.contains(unit))
+				str.append(" <<<파티중");
+			str.append("\n------------------------------");
 			if (i < units.size() - 1)
 				str.append("\n");
 		}
