@@ -143,19 +143,26 @@ public class Player {
 		out.clear();
 		for (int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
-			boolean is
+			boolean isEquipped = false;
 			if(item instanceof Wearable) {
-				
+				Wearable wearable = (Wearable) item;
+				isEquipped=wearable.isEquiped();
+					
 			}
-			out.add(i + 1, IndexColor.BLACK, IndexColor.WHITE).add(") ").add(item);
+			if(isEquipped)
+				out.add(i + 1, IndexColor.BLACK, IndexColor.BRIGHTGREEN).add(")[착용중]").add(item);
+			else
+				out.add(i + 1, IndexColor.BLACK, IndexColor.WHITE).add(") ").add(item);
 			out.reset().add("\n------------------------------\n");
 		}
 		out.print();
 	}
 
 	public void showUnitEquip(int index) {
-		out.clear();
 		Playable unit = party.get(index);
+		if(unit==null)
+			return;
+		out.clear();
 		out.add(unit).add("\n").println(unit.equipmentsToSting());
 	}
 
