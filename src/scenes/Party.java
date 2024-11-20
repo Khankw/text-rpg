@@ -37,6 +37,22 @@ public class Party extends Scene {
 	}
 
 	private void equip() {
+		printTitle("장비교체");
+		player.showParty();
+		int sel = in.input("파티원슬롯 선택", 0) - 1;
+		if (sel < 0 || sel >= 5)
+			return;
+		
+		player.showUnitEquip(sel);
+		player.showItems();
+		int index = in.input("아이템 번호 입력", 0) - 1;
 
+		if (index < 0 || index >= player.getItemsSize())
+			return;
+		
+		if(player.unitEquip(sel, index))
+			out.println("성공");
+		else
+			out.println("실패");
 	}
 }

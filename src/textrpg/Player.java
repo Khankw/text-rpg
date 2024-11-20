@@ -143,9 +143,33 @@ public class Player {
 		out.clear();
 		for (int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
+			boolean is
+			if(item instanceof Wearable) {
+				
+			}
 			out.add(i + 1, IndexColor.BLACK, IndexColor.WHITE).add(") ").add(item);
 			out.reset().add("\n------------------------------\n");
 		}
 		out.print();
+	}
+
+	public void showUnitEquip(int index) {
+		out.clear();
+		Playable unit = party.get(index);
+		out.add(unit).add("\n").println(unit.equipmentsToSting());
+	}
+
+	public boolean unitEquip(int slot, int itemIdx) {
+		Item item = items.get(itemIdx);
+		if (!(item instanceof Wearable))
+			return false;
+
+		Wearable wearable = (Wearable) item;
+		if (wearable.isEquiped())
+			wearable.getEquippedUnit().unequip(wearable.getType());
+
+		Playable unit = party.get(slot);
+		unit.equip(wearable);
+		return true;
 	}
 }
