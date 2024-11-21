@@ -81,6 +81,17 @@ public class Player {
 		return units.size();
 	}
 
+	public boolean hasPartyUnit() {
+		for (int i = 0; i < MAXPARTY; i++)
+			if (party.get(i) != null)
+				return true;
+		return false;
+	}
+
+	public boolean hasPartyUnit(int index) {
+		return party.get(index) != null;
+	}
+
 	public boolean isMaxUnit() {
 		return units.size() == MAXUNITS;
 	}
@@ -91,6 +102,17 @@ public class Player {
 
 	public boolean isMaxItem() {
 		return items.size() == MAXITEMS;
+	}
+
+	public int getWearableItemSize() {
+		int cnt = 0;
+		for (int i = 0; i < items.size(); i++) {
+			Item item = items.get(i);
+			if (item instanceof Wearable)
+				cnt++;
+
+		}
+		return cnt;
 	}
 
 	public void subtractMoney(int money) {
@@ -144,12 +166,12 @@ public class Player {
 		for (int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
 			boolean isEquipped = false;
-			if(item instanceof Wearable) {
+			if (item instanceof Wearable) {
 				Wearable wearable = (Wearable) item;
-				isEquipped=wearable.isEquiped();
-					
+				isEquipped = wearable.isEquiped();
+
 			}
-			if(isEquipped)
+			if (isEquipped)
 				out.add(i + 1, IndexColor.BLACK, IndexColor.BRIGHTGREEN).add(")[착용중]").add(item);
 			else
 				out.add(i + 1, IndexColor.BLACK, IndexColor.WHITE).add(") ").add(item);
@@ -158,18 +180,39 @@ public class Player {
 		out.print();
 	}
 
+	public void showWearableItems() {
+		out.clear();
+		int num = 1;
+		for (int i = 0; i < items.size(); i++) {
+			Item item = items.get(i);
+			if (item instanceof Wearable) {
+				Wearable wearable = (Wearable) item;
+				if (wearable.isEquiped())
+					out.add(num++, IndexColor.BLACK, IndexColor.BRIGHTGREEN).add(")[착용중]").add(item);
+				else
+					out.add(num++, IndexColor.BLACK, IndexColor.WHITE).add(") ").add(item);
+				out.reset().add("\n------------------------------\n");
+			}
+		}
+		out.print();
+	}
+
 	public void showUnitEquip(int index) {
 		Playable unit = party.get(index);
-		if(unit==null)
+		if (unit == null)
 			return;
 		out.clear();
 		out.add(unit).add("\n").println(unit.equipmentsToSting());
 	}
 
 	public boolean unitEquip(int slot, int itemIdx) {
-		Item item = items.get(itemIdx);
-		if (!(item instanceof Wearable))
-			return false;
+		Item item = null;
+		int num = 1;
+		for (int i = 0; i < items.size(); i++) {
+			item = items.get(i);
+			if (item instanceof Wearable && itemIdx == num++)
+				break;
+		}
 
 		Wearable wearable = (Wearable) item;
 		if (wearable.isEquiped())
